@@ -20,7 +20,7 @@ export class ProductService {
     let prod7: IProduct = { id: "6", name: "Febricet", manufacturer: manu2, price: 940, expiryDate: new Date('2026-02-07') };
     let prod8: IProduct = { id: "7", name: "Midol", manufacturer: manu2, price: 670, expiryDate: new Date('2025-08-30') };
     let prod9: IProduct = { id: "8", name: "Panlax", manufacturer: manu2, price: 790, expiryDate: new Date('2027-03-02') };
-    this.prods = [ prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9 ];
+    this.prods = [ prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9, prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9 ];
   }
 
   ngOnInit(): void {
