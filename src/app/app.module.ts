@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ProductViewComponent } from './components/product-view/product-view.component';
 import { AboutViewComponent } from './components/about-view/about-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from "@angular/material/list";
@@ -32,7 +33,8 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
