@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ProductViewComponent} from "../product/components/product-view/product-view.component";
-import {AboutViewComponent} from "../about/components/about-view/about-view.component";
 
 const aboutRoutes: Routes = [
-
+  { path: '', loadComponent: () => import('./components/about-view/about-view.component')
+      .then((x) => x.AboutViewComponent)  }
 ];
 
 @NgModule({

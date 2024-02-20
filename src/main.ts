@@ -1,10 +1,10 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import {bootstrapApplication} from "@angular/platform-browser";
-import {AppComponent} from "./app/core/components/app/app.component";
+import {AppComponent} from "./app/app.component";
 import {provideRouter} from "@angular/router";
 // import routes from "./app/app.routes";
-import {AppModule} from "./app/core/app.module";
+import {AppModule} from "./app/app.module";
 
 
 // We must use non-standalone bootstrapApp because of Material Sidenav

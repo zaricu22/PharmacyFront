@@ -1,16 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ProductEditComponent } from './components/product-edit/product-edit.component';
-import { ProductCreateComponent } from './components/product-create/product-create.component';
+import {ProductRoutingModule} from "./product-routing.module";
 
-
-// Only because used Material's Sidenav in AppComponent which expects
-// BrowserModule eagerly(non-lazy) loaded
 @NgModule({
-  declarations: [
-    ProductEditComponent,
-    ProductCreateComponent
-  ],
-  imports: [],
+  declarations: [],
+  imports: [ ProductRoutingModule ],
   providers: [],
   bootstrap: []
 })

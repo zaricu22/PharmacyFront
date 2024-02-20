@@ -3,7 +3,7 @@ import { MatPaginator, MatPaginatorIntl } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { IProduct } from '../../../core/models/iproduct';
-import { ProductService } from "../../../about/services/product.service";
+import { ProductService } from "../../services/product.service";
 import { Subscription } from 'rxjs';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -13,18 +13,30 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from "@angular/common";
+import { HttpResponse } from "@angular/common/http";
+import { RouterLink } from "@angular/router";
 
 @Component({
   standalone: true,
   selector: 'app-product-view',
   templateUrl: './product-view.component.html',
   styleUrls: ['./product-view.component.css'],
-  imports:[CommonModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule]
+  imports:[
+    RouterLink,
+    CommonModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule]
 })
 export class ProductViewComponent implements OnInit, OnDestroy {
   products: Array<IProduct> = [];
 
   subscription1: Subscription = new Subscription;
+  subscription2: Subscription = new Subscription;
+  subscription3: Subscription = new Subscription;
 
   @ViewChild('paginator')
   paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl, ChangeDetectorRef.prototype);
@@ -47,9 +59,20 @@ export class ProductViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription1.unsubscribe();
+    this.subscription2.unsubscribe();
+    this.subscription3.unsubscribe();
   }
 
   applyFilter(filterValue: string) {
       this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  deleteProd(id: string){
+    this.subscription1 = this.prodService.deleteProd(id).subscribe((res: HttpResponse<any>) => {
+      if(res.status == 200){
+        let filteredTableData = this.dataSource.data.filter(value => value.id !== id);
+        this.dataSource.data = filteredTableData;
+      }
+    });
   }
 }

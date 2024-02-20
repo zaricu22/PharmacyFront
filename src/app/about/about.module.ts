@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
+import {AboutRoutingModule} from "./about-routing.module";
 
-
-// Only because used Material's Sidenav in AppComponent which expects
-// BrowserModule eagerly(non-lazy) loaded
 @NgModule({
   declarations: [],
-  imports: [],
+  imports: [ AboutRoutingModule ],
   providers: [],
   bootstrap: []
 })
