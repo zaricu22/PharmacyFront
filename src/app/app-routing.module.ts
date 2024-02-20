@@ -5,7 +5,9 @@ const appRoutes: Routes = [
   { path: "product", loadChildren: () => import('./product/product.module')
       .then((x) => x.ProductModule) },
   { path: "about", loadChildren: () => import('./about/about.module')
-      .then((x) => x.AboutModule) }
+      .then((x) => x.AboutModule) },
+  { path: "statistics", loadChildren: () => import('./statistics/statistics.module')
+      .then((x) => x.StatisticsModule) }
 ];
 
 @NgModule({
