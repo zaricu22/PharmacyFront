@@ -8,10 +8,12 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import { MatButtonModule} from "@angular/material/button";
 import {provideHttpClient} from "@angular/common/http";
+import { NgChartsModule } from 'ng2-charts';
+import { SidenavComponent } from './core/components/sidenav/sidenav.component';
+import { HeaderComponent } from './core/components/header/header.component';
+import { FooterComponent } from './core/components/footer/footer.component';
+import {MatNativeDateModule} from "@angular/material/core";
 
-
-// Only because used Material's Sidenav in AppComponent which expects
-// BrowserModule eagerly(non-lazy) loaded
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -19,12 +21,11 @@ import {provideHttpClient} from "@angular/common/http";
     BrowserAnimationsModule,
 
     AppRoutingModule,
-    RouterModule,
-    RouterLink,
+    MatNativeDateModule,
 
-    MatSidenavModule,
-    MatListModule,
-    MatButtonModule
+    HeaderComponent,
+    SidenavComponent,
+    FooterComponent
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]
