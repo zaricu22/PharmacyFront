@@ -30,7 +30,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="Edit">
       <th mat-header-cell *matHeaderCellDef> </th>
-      <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary" routerLink="edit"> Edit </button> </td>
+      <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary" (click)="navigateToEditPage(element.id)"> Edit </button> </td>
     </ng-container>
     <!-- Position Column -->
     <ng-container matColumnDef="Delete">

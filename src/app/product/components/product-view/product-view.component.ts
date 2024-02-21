@@ -14,7 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from "@angular/common";
 import { HttpResponse } from "@angular/common/http";
-import { RouterLink } from "@angular/router";
+import {RouterLink, Router, NavigationExtras} from "@angular/router";
 
 @Component({
   standalone: true,
@@ -46,7 +46,7 @@ export class ProductViewComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name','manufacturer.name','price','expiryDate','Edit','Delete'];
   dataSource: MatTableDataSource<IProduct> = new MatTableDataSource;
 
-  constructor(private prodService: ProductService) {}
+  constructor(private prodService: ProductService, private router: Router) {}
 
   ngOnInit() {
     this.subscription1 = this.prodService.getProdList().subscribe((res: Array<IProduct>) => {
@@ -74,5 +74,14 @@ export class ProductViewComponent implements OnInit, OnDestroy {
         this.dataSource.data = filteredTableData;
       }
     });
+  }
+
+  navigateToEditPage(productId: string) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "productId": productId
+      }
+    };
+    this.router.navigate(["product/edit"], navigationExtras);
   }
 }

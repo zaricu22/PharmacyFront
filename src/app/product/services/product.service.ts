@@ -8,7 +8,6 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class ProductService {
-  prods: Array<IProduct> = [];
 
   constructor(private http: HttpClient) {}
 
@@ -16,12 +15,16 @@ export class ProductService {
       return this.http.get<Array<IProduct>>(environment.apiUrl + '/products');
   }
 
+  getProdById(id: string): Observable<IProduct> {
+    return this.http.get<IProduct>(environment.apiUrl + '/products/'+ id);
+  }
+
   saveProd(prod: IProduct): Observable<IProduct> {
     return this.http.post<IProduct>(environment.apiUrl + '/products', prod);
   }
 
   updateProd(id: string, prod: IProduct): Observable<IProduct> {
-    return this.http.put<IProduct>(environment.apiUrl + '/products' + id, prod);
+    return this.http.put<IProduct>(environment.apiUrl + '/products/' + id, prod);
   }
 
   deleteProd(id: string): Observable<any> {
