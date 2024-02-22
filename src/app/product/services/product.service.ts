@@ -19,6 +19,14 @@ export class ProductService {
     return this.http.get<IProduct>(environment.apiUrl + '/products/'+ id);
   }
 
+  getProdFiveMostExpensive(): Observable<Array<IProduct>> {
+    return this.http.get<Array<IProduct>>(environment.apiUrl + '/products/price/top-five');
+  }
+
+  getProdFiveLeastExpensive(): Observable<Array<IProduct>> {
+    return this.http.get<Array<IProduct>>(environment.apiUrl + '/products/price/least-five');
+  }
+
   saveProd(prod: IProduct): Observable<IProduct> {
     return this.http.post<IProduct>(environment.apiUrl + '/products', prod);
   }

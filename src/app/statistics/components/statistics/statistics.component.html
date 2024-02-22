@@ -1,1 +1,43 @@
-<p>statistics works!</p>
+
+<mat-card style="float:left; display:inline; width: 49%; float: left">
+<mat-card-header>
+  <mat-card-title>Product Dialog</mat-card-title>
+  <mat-card-subtitle>Fill form</mat-card-subtitle>
+</mat-card-header>
+  <mat-card-content>
+    <canvas
+      baseChart
+      class="chart"
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [plugins]="barChartPlugins"
+      [type]="barChartType"
+    >
+    </canvas>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button type="submit">Submit</button>
+  </mat-card-actions>
+</mat-card>
+
+
+<mat-card style="float:left; display:inline; width: 49%; float: right">
+  <mat-card-header>
+    <mat-card-title>Product Dialog</mat-card-title>
+    <mat-card-subtitle>Fill form</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <canvas
+      baseChart
+      class="chart"
+      [data]="pieChartData"
+      [type]="pieChartType"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+    >
+    </canvas>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button type="submit">Submit</button>
+  </mat-card-actions>
+</mat-card>
