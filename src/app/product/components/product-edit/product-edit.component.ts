@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
-import {ProductDialogComponent} from "../../../shared/components/product-dialog/product-dialog.component";
-import {IProduct} from "../../../core/models/iproduct";
-import {IManufacturer} from "../../../core/models/imanufacturer";
-import {Observable, Subscription} from "rxjs";
-import {ManufacturerService} from "../../../core/services/manufacturer.service";
-import {ProductService} from "../../services/product.service";
-import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatSelectModule} from "@angular/material/select";
-import {MatInputModule} from "@angular/material/input";
-import {MatCardModule} from "@angular/material/card";
-import {MatButtonModule} from "@angular/material/button";
-import {MatListModule} from "@angular/material/list";
-import {ActivatedRoute } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { Observable, Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { ProductDialogComponent } from "../../../shared/components/product-dialog/product-dialog.component";
+import { IProduct } from "../../../core/models/iproduct";
+import { IManufacturer } from "../../../core/models/imanufacturer";
+import { ManufacturerService } from "../../../core/services/manufacturer.service";
+import { ProductService } from "../../services/product.service";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatSelectModule } from "@angular/material/select";
+import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
+import { MatListModule } from "@angular/material/list";
 
 @Component({
   standalone: true,
@@ -42,47 +42,50 @@ export class ProductEditComponent {
   productId = '';
   fetchedProduct$: Observable<IProduct> = new Observable<IProduct>();
   editedProduct: IProduct | null = null;
-
   name: string = "";
   price: number = 0;
   date: Date = new Date();
   manufacturer: string = "";
-
   manus: Array<IManufacturer> = [];
 
-  private subscription1: Subscription = new Subscription;
-  private subscription2: Subscription = new Subscription;
+  private subscription$: Subscription = new Subscription;
 
   constructor(private manuService: ManufacturerService,
               private prodService: ProductService,
-              private _snackBar: MatSnackBar, private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private _snackBar: MatSnackBar)
+  {
     this.route.queryParams.subscribe(params => {
       this.productId = params["productId"];
     });
   }
 
   ngOnInit() {
-    this.subscription1 = this.manuService.getManuList().subscribe((res: Array<IManufacturer>) => {
-      this.manus = res
-    });
+    this.subscription$.add(
+      this.manuService.getManuList().subscribe((res: Array<IManufacturer>) => {
+        this.manus = res
+      })
+    );
     this.fetchedProduct$ = this.prodService.getProdById(this.productId);
-    this.fetchedProduct$.subscribe((res: IProduct) => {
-      this.editedProduct = res;
-    });
+    this.subscription$.add(
+      this.fetchedProduct$.subscribe((res: IProduct) => {
+        this.editedProduct = res;
+      })
+    );
   }
 
   ngOnDestroy() {
-    this.subscription1.unsubscribe();
-    this.subscription2.unsubscribe();
-  }
-
-  onSubmit() {
-      this.subscription1 = this.prodService.updateProd(this.productId, this.editedProduct!).subscribe((res: IProduct) => {
-        this.openSnackBar("Successfully added product!", "OK");
-      });
+    this.subscription$.unsubscribe();
   }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
+  }
+
+  onSubmit() {
+    this.subscription$.add(this.prodService.updateProd(this.productId, this.editedProduct!).subscribe((res: IProduct) => {
+        this.openSnackBar("Product successfully updated!", "OK");
+      })
+    );
   }
 }

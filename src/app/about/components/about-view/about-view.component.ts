@@ -6,8 +6,8 @@ import { MatListModule } from "@angular/material/list";
   selector: 'app-about-view',
   templateUrl: './about-view.component.html',
   styleUrls: ['./about-view.component.css'],
-  imports:[ MatListModule]
+  imports:[
+    MatListModule
+  ]
 })
-export class AboutViewComponent {
-
-}
+export class AboutViewComponent {}

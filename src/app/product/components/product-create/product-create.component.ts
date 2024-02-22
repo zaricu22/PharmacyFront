@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {ProductModule} from "../../product.module";
 import {ProductDialogComponent} from "../../../shared/components/product-dialog/product-dialog.component";
 
 @Component({
@@ -11,6 +10,4 @@ import {ProductDialogComponent} from "../../../shared/components/product-dialog/
     ProductDialogComponent
   ]
 })
-export class ProductCreateComponent {
-
-}
+export class ProductCreateComponent {}

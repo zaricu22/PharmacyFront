@@ -4,7 +4,6 @@ import {MatListModule} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink, RouterModule} from "@angular/router";
 
-
 @Component({
   standalone: true,
   selector: 'app-sidenav',
@@ -13,7 +12,6 @@ import {RouterLink, RouterModule} from "@angular/router";
   imports: [
     RouterModule,
     RouterLink,
-
     MatSidenavModule,
     MatListModule,
     MatButtonModule
