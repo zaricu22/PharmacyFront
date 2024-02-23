@@ -41,12 +41,18 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription$.add(forkJoin([this.productService.getProdFiveMostExpensive(), this.productService.getProdFiveLeastExpensive()]) //we can use more that 2 api request
+    this.subscription$.add(
+      forkJoin([
+        this.productService.getProdFiveMostExpensive(),
+        this.productService.getProdFiveLeastExpensive(),
+        this.manufacturerService.countProductsByManus()
+      ]) //we can use more that 2 api request
       .subscribe(
-        (result: Array<Array<IProduct>>) => {
+        (result) => {
           //this will return list of array of the result
-          this.topFiveProdByPrice = result[0];
-          this.leastFiveProdByPrice = result[1];
+          this.topFiveProdByPrice = result[0] as Array<IProduct>;
+          this.leastFiveProdByPrice = result[1] as Array<IProduct>;
+          this.numOfProductsByManus = result[2] as Array<ProductNumberDTO>;
 
           this.barChartData = {
             labels: ['Top', 'Least'],
@@ -63,19 +69,14 @@ export class StatisticsComponent implements OnInit, OnDestroy {
               { data: [0, this.leastFiveProdByPrice[4].price], label: this.leastFiveProdByPrice[4].name},
             ],
           };
-        }
-      )
-    );
 
-    this.subscription$.add(this.manufacturerService.countProductsByManus()
-      .subscribe((res: Array<ProductNumberDTO>) => {
-          this.numOfProductsByManus = res;
-
+          let newPieChartData: ChartData<'pie', number[], string | string[]> =
+            { labels: [], datasets: [ {data: [] } ] };
           this.numOfProductsByManus.forEach((item) => {
-            (this.pieChartData.labels as String[]).push(item.name);
-            this.pieChartData.datasets[0].data.push(item.count);
+            (newPieChartData.labels as String[]).push(item.name);
+            newPieChartData.datasets[0].data.push(item.count);
+            this.pieChartData = newPieChartData;
           });
-
         }
       )
     );
@@ -126,14 +127,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     },
   };
 
-  public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: [],
-    datasets: [
-      {
-        data: [],
-      }
-    ],
-  };
+  public pieChartData: ChartData<'pie', number[], string | string[]> =
+    { labels: [], datasets: [ {data: [] } ] };
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [DataLabelsPlugin];
 
