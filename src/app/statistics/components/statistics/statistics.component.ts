@@ -43,8 +43,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
     this.subscription$.add(
       forkJoin([
-        this.productService.getProdFiveMostExpensive(),
-        this.productService.getProdFiveLeastExpensive(),
+        this.productService.getFiveProdOrderByPrice('top-five'),
+        this.productService.getFiveProdOrderByPrice('least-five'),
         this.manufacturerService.countProductsByManus()
       ]) //we can use more that 2 api request
       .subscribe(

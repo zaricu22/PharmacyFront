@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../../core/models/iproduct';
-import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {catchError, Observable} from "rxjs";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,31 +16,22 @@ export class ProductService {
   }
 
   getProdPage(pageNumber: number, pageSize: number): Observable<Array<IProduct>> {
-    return this.http.get<Array<IProduct>>(
-      environment.apiUrl +
-          '/products/' +
-          pageNumber + '/' +
-          pageSize
-    );
-  }
+    let params = new HttpParams()
+      .set('page', pageNumber)
+      .set('size', pageSize);
 
-  getProdPageSorted(pageNumber: number, pageSize: number, sortBy: string, sortDir: string): Observable<Array<IProduct>> {
-    return this.http.get<Array<IProduct>>(
-      environment.apiUrl +
-          '/products/' +
-          pageNumber + '/' +
-          pageSize + '/' +
-          pageSize + '/' +
-          pageSize
-    );
+    return this.http.get<Array<IProduct>>(environment.apiUrl + '/products', { params: params });
   }
 
   getProdById(id: string): Observable<IProduct> {
     return this.http.get<IProduct>(environment.apiUrl + '/products/'+ id);
   }
 
-  getProdFiveMostExpensive(): Observable<Array<IProduct>> {
-    return this.http.get<Array<IProduct>>(environment.apiUrl + '/products/price/top-five');
+  getFiveProdOrderByPrice(orderDir: string): Observable<Array<IProduct>> {
+    let params = new HttpParams()
+      .set('orderDir', orderDir)
+
+    return this.http.get<Array<IProduct>>(environment.apiUrl + '/products', { params: params });
   }
 
   getProdFiveLeastExpensive(): Observable<Array<IProduct>> {

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {IManufacturer} from "../models/imanufacturer";
-import {IProduct} from "../models/iproduct";
 import {ProductNumberDTO} from "../dto/product-number-dto";
 
 @Injectable({
@@ -18,6 +17,9 @@ export class ManufacturerService {
   }
 
   countProductsByManus(): Observable<Array<ProductNumberDTO>> {
-    return this.http.get<Array<ProductNumberDTO>>(environment.apiUrl + '/manufacturers/products');
+    let params = new HttpParams()
+      .set('countOnly', true);
+
+    return this.http.get<Array<ProductNumberDTO>>(environment.apiUrl + '/manufacturers/products', { params: params });
   }
 }
