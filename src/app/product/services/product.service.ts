@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../../core/models/iproduct';
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {Observable} from "rxjs";
+import {catchError, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,26 @@ export class ProductService {
 
   getProdList(): Observable<Array<IProduct>> {
       return this.http.get<Array<IProduct>>(environment.apiUrl + '/products');
+  }
+
+  getProdPage(pageNumber: number, pageSize: number): Observable<Array<IProduct>> {
+    return this.http.get<Array<IProduct>>(
+      environment.apiUrl +
+          '/products/' +
+          pageNumber + '/' +
+          pageSize
+    );
+  }
+
+  getProdPageSorted(pageNumber: number, pageSize: number, sortBy: string, sortDir: string): Observable<Array<IProduct>> {
+    return this.http.get<Array<IProduct>>(
+      environment.apiUrl +
+          '/products/' +
+          pageNumber + '/' +
+          pageSize + '/' +
+          pageSize + '/' +
+          pageSize
+    );
   }
 
   getProdById(id: string): Observable<IProduct> {

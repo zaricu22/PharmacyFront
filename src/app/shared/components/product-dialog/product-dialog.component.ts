@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { Subscription } from "rxjs";
+import {catchError, Subscription} from "rxjs";
 import { IProduct } from "../../../core/models/iproduct";
 import { IManufacturer } from "../../../core/models/imanufacturer";
 import { ProductService } from "../../../product/services/product.service";
@@ -15,6 +15,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatListModule } from "@angular/material/list";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   standalone: true,
@@ -49,9 +50,16 @@ export class ProductDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription$.add(
-      this.manuService.getManuList().subscribe((res: Array<IManufacturer>) => {
-        this.manus = res
-      })
+      this.manuService.getManuList().subscribe(
+        {
+          next: (res: Array<IManufacturer>) => {
+            this.manus = res;
+          },
+          error: (err: HttpErrorResponse) => {
+            this.openSnackBar(err.error.message, "CANCEL")
+          }
+        }
+      )
     );
   }
 
@@ -65,9 +73,16 @@ export class ProductDialogComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.subscription$.add(
-      this.prodService.saveProd(this.product).subscribe((res: IProduct) => {
-        this.openSnackBar("Product successfully added!", "OK");
-      })
+      this.prodService.saveProd(this.product).subscribe(
+        {
+          next: (res: IProduct) => {
+            this.openSnackBar("Product successfully added!", "OK")
+          },
+          error: (err: HttpErrorResponse) => {
+            this.openSnackBar(err.error.message, "CANCEL")
+          }
+        }
+      )
     );
   }
 }

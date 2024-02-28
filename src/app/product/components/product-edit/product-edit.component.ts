@@ -17,6 +17,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { MatListModule } from "@angular/material/list";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   standalone: true,
@@ -62,15 +63,29 @@ export class ProductEditComponent {
 
   ngOnInit() {
     this.subscription$.add(
-      this.manuService.getManuList().subscribe((res: Array<IManufacturer>) => {
-        this.manus = res
-      })
+      this.manuService.getManuList().subscribe(
+        {
+          next: (res: Array<IManufacturer>) => {
+            this.manus = res
+          },
+          error: (err: HttpErrorResponse) => {
+            this.openSnackBar(err.error.message, "CANCEL")
+          }
+        }
+      )
     );
     this.fetchedProduct$ = this.prodService.getProdById(this.productId);
     this.subscription$.add(
-      this.fetchedProduct$.subscribe((res: IProduct) => {
-        this.editedProduct = res;
-      })
+      this.fetchedProduct$.subscribe(
+        {
+          next: (res: IProduct) => {
+            this.editedProduct = res;
+          },
+          error: (err: HttpErrorResponse) => {
+            this.openSnackBar(err.error.message, "CANCEL")
+          }
+        }
+      )
     );
   }
 
@@ -83,9 +98,17 @@ export class ProductEditComponent {
   }
 
   onSubmit() {
-    this.subscription$.add(this.prodService.updateProd(this.productId, this.editedProduct!).subscribe((res: IProduct) => {
-        this.openSnackBar("Product successfully updated!", "OK");
-      })
+    this.subscription$.add(
+      this.prodService.updateProd(this.productId, this.editedProduct!).subscribe(
+        {
+          next: (res: IProduct) => {
+            this.openSnackBar("Product successfully updated!", "OK");
+          },
+          error: (err: HttpErrorResponse) => {
+            this.openSnackBar(err.error.message, "CANCEL")
+          }
+        }
+      )
     );
   }
 }
