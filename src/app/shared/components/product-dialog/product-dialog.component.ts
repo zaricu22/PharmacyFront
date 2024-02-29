@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import {catchError, Subscription} from "rxjs";
 import { IProduct } from "../../../core/models/iproduct";
 import { IManufacturer } from "../../../core/models/imanufacturer";
-import { ProductService } from "../../../product/services/product.service";
+import { ProductService } from "../../../features/product/services/product.service";
 import { ManufacturerService } from "../../../core/services/manufacturer.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";

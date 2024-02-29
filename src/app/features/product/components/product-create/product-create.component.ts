@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ProductDialogComponent} from "../../../shared/components/product-dialog/product-dialog.component";
+import {ProductDialogComponent} from "../../../../shared/components/product-dialog/product-dialog.component";
 
 @Component({
   standalone: true,

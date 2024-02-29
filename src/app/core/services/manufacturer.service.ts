@@ -4,9 +4,10 @@ import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {IManufacturer} from "../models/imanufacturer";
 import {ProductNumberDTO} from "../dto/product-number-dto";
+import {CoreModule} from "../core.module";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: CoreModule
 })
 export class ManufacturerService {
 

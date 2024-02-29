@@ -1,15 +1,15 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BaseChartDirective, NgChartsModule} from "ng2-charts";
 import {ChartConfiguration, ChartData, ChartEvent, ChartType} from "chart.js";
-
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
-import {IProduct} from "../../../core/models/iproduct";
+import {IProduct} from "../../../../core/models/iproduct";
 import {forkJoin, Subscription} from "rxjs";
-import {ManufacturerService} from "../../../core/services/manufacturer.service";
+import {ManufacturerService} from "../../../../core/services/manufacturer.service";
 import {ProductService} from "../../../product/services/product.service";
-import {ProductNumberDTO} from "../../../core/dto/product-number-dto";
+import {ProductNumberDTO} from "../../../../core/dto/product-number-dto";
+import {StatisticService} from "../../services/statistic.service";
 
 @Component({
   standalone: true,
@@ -26,7 +26,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   manufacturerService: ManufacturerService;
-  productService: ProductService;
+  statisticService: StatisticService;
 
   numOfProductsByManus: Array<ProductNumberDTO> = new Array<ProductNumberDTO>;
   topFiveProdByPrice: Array<IProduct> = new Array<IProduct>();
@@ -34,17 +34,17 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
   subscription$: Subscription = new Subscription;
 
-  constructor(manufacturerService: ManufacturerService, productService: ProductService) {
+  constructor(manufacturerService: ManufacturerService, statisticService: StatisticService) {
     this.manufacturerService = manufacturerService;
-    this.productService = productService;
+    this.statisticService = statisticService;
   }
 
   ngOnInit() {
 
     this.subscription$.add(
       forkJoin([
-        this.productService.getFiveProdOrderByPrice('top-five'),
-        this.productService.getFiveProdOrderByPrice('least-five'),
+        this.statisticService.getFiveProdOrderByPrice('top-five'),
+        this.statisticService.getFiveProdOrderByPrice('least-five'),
         this.manufacturerService.countProductsByManus()
       ]) //we can use more that 2 api request
       .subscribe(
