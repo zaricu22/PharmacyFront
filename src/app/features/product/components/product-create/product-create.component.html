@@ -1,2 +1,2 @@
 
-<app-product-dialog></app-product-dialog>
+<app-product-dialog [manufacturers]="manufacturers$ | async" (submitEvent)="onSubmit($event)"></app-product-dialog>

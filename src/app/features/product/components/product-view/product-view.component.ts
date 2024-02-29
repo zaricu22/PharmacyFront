@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { CommonModule } from "@angular/common";
-import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import { HttpErrorResponse, HttpResponse } from "@angular/common/http";
 import { RouterLink, Router, NavigationExtras } from "@angular/router";
 import { IProduct } from '../../../../core/models/iproduct';
 import { ProductService } from "../../services/product.service";
-import {MatPaginator, MatPaginatorIntl, PageEvent} from "@angular/material/paginator";
+import { MatPaginator, MatPaginatorIntl, PageEvent } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Subscription } from 'rxjs';
@@ -138,7 +138,7 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       this.prodService.deleteProd(id).subscribe(
         {
           next: (res: HttpResponse<any>) => {
-            if (res.status == 200) {
+            if (res.status == 204) {
               let filteredTableData = this.dataSource.data.filter(value => value.id !== id);
               this.dataSource.data = filteredTableData;
               this.openSnackBar("Product successfully removed!", "OK");

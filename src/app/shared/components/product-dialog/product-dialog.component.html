@@ -4,13 +4,16 @@
     <mat-card-title>Product Dialog</mat-card-title>
     <mat-card-subtitle>Fill form</mat-card-subtitle>
   </mat-card-header>
+  <!-- Edit -->
   <form #myForm="ngForm" (ngSubmit)="onSubmit()">
     <mat-card-content>
+      <div *ngIf="product">
+        <!--  -->
       <mat-list role="list" style="text-align: center">
         <mat-list-item role="listitem" style="height: 100px;">
           <mat-form-field appearance="outline">
             <mat-label>Enter drug name</mat-label>
-            <input matInput type="text" name="name" [(ngModel)]="product.name" required>
+            <input matInput type="text" name="name" [(ngModel)]="product!.name" required>
             <mat-icon matSuffix>local_pharmacy</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
@@ -18,7 +21,7 @@
         <mat-list-item role="listitem" style="height: 100px;">
           <mat-form-field appearance="outline">
             <mat-label>Enter drug price</mat-label>
-            <input matInput type="number" name="price" [(ngModel)]="product.price" min="1" required>
+            <input matInput type="number" name="price" [(ngModel)]="product!.price" min="1" required>
             <mat-icon matSuffix>euro_symbol</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
@@ -26,7 +29,7 @@
         <mat-list-item role="listitem" style="height: 100px;">
           <mat-form-field>
             <mat-label>Choose expiry date</mat-label>
-            <input matInput [matDatepicker]="picker" name="expiryDate" [(ngModel)]="product.expiryDate" required>
+            <input matInput [matDatepicker]="picker" name="expiryDate" [(ngModel)]="product!.expiryDate" required>
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -35,12 +38,13 @@
         <mat-list-item role="listitem" style="height: 100px;">
           <mat-form-field>
             <mat-label>Choose manufacturer</mat-label>
-            <mat-select [(ngModel)]="product.manufacturer.id" name="manufacturer.id">
-                <mat-option [value]="manu.id" *ngFor="let manu of manus">{{manu.name}}</mat-option>
+            <mat-select [(ngModel)]="product!.manufacturer!.id" name="manufacturer.id">
+                <mat-option [value]="manu.id" *ngFor="let manu of manufacturers!">{{manu.name}}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-list-item>
       </mat-list>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button type="submit" [disabled]="!myForm.valid">Submit</button>
