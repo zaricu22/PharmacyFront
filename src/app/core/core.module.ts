@@ -8,6 +8,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {RouterLink, RouterModule} from "@angular/router";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {TokenInterceptor} from "./auth/interceptors/token.interceptor";
 
 @NgModule({
   declarations: [
@@ -23,9 +25,17 @@ import {MatListModule} from "@angular/material/list";
     MatIconModule,
     MatButtonModule,
     MatListModule,
-    MatSidenavModule
+    MatSidenavModule,
+
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   exports: [
     HeaderComponent,
     FooterComponent,

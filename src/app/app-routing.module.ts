@@ -1,13 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {authGuard} from "./core/auth/guards/auth.guard";
 
 const appRoutes: Routes = [
-  { path: "product", loadChildren: () => import('./features/product/product.module')
-      .then((x) => x.ProductModule) },
-  { path: "statistics", loadChildren: () => import('./features/statistics/statistics.module')
-      .then((x) => x.StatisticsModule) },
-  { path: 'about', loadComponent: () => import('./core/components/about/about-view.component')
-      .then((x) => x.AboutViewComponent)  }
+  // { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  // { path: '**', redirectTo: '' },
+  { path: "login",
+    loadComponent: () => import('./core/auth/components/login/login.component')
+      .then((x) => x.LoginComponent) ,
+  },
+  { path: "register",
+    loadComponent: () => import('./core/auth/components/register/register.component')
+      .then((x) => x.RegisterComponent),
+  },
+  { path: "product",
+    loadChildren: () => import('./features/product/product.module')
+      .then((x) => x.ProductModule) ,
+    canActivate: [authGuard]
+  },
+  { path: "statistics",
+    loadChildren: () => import('./features/statistics/statistics.module')
+      .then((x) => x.StatisticsModule),
+    canActivate: [authGuard]
+  },
+  { path: 'about',
+    loadComponent: () => import('./core/components/about/about-view.component')
+      .then((x) => x.AboutViewComponent)
+  }
 ];
 
 @NgModule({
