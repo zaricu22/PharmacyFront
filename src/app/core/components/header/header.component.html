@@ -1,9 +1,16 @@
 
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-icon-button (click)="sendMessageToSidenav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <img src="https://pic.onlinewebfonts.com/thumbnails/icons_549441.svg" width="56" height="56">
+    <div style="width:100%; display: flex; justify-content: space-between;">
+      <button mat-icon-button (click)="sendMessageToSidenav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <img src="https://pic.onlinewebfonts.com/thumbnails/icons_549441.svg" width="56" height="56">
+      <div style="display: flex;">
+        <button *ngIf="!isLogged()" mat-raised-button style="background-color: #3f51b5; margin: 10px 5px;"> <a routerLink="{{loginURL}}" style="text-decoration: none; color: white;"> Login </a> </button>
+        <button *ngIf="!isLogged()" mat-raised-button style="background-color: #b63d52; margin: 10px 5px;"> <a routerLink="{{registerURL}}" style="text-decoration: none; color: white;"> Register </a> </button>
+        <button *ngIf="isLogged()" mat-raised-button style="background-color: #b63d52; text-decoration: none; color: white; margin: 10px 5px;" (click)="logout()"> Logout </button>
+      </div>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

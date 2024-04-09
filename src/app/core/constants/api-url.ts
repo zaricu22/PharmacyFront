@@ -19,4 +19,6 @@ export class StatisticURL {
 export class AuthenticationURL {
   static readonly REGISTER = "/register";
   static readonly AUTHENTICATE = "/authenticate";
+  static readonly LOGIN = "/login";
+  static readonly LOGOUT = "/logout";
 }

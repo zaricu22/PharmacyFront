@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {authGuard} from "./core/auth/guards/auth.guard";
+import {authGuard, nonAuthGuard} from "./core/auth/guards/auth.guard";
 
 const appRoutes: Routes = [
   // { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   // { path: '**', redirectTo: '' },
   { path: "login",
     loadComponent: () => import('./core/auth/components/login/login.component')
-      .then((x) => x.LoginComponent) ,
+      .then((x) => x.LoginComponent),
+    canActivate: [nonAuthGuard]
   },
   { path: "register",
     loadComponent: () => import('./core/auth/components/register/register.component')
       .then((x) => x.RegisterComponent),
+    canActivate: [nonAuthGuard]
   },
   { path: "product",
     loadChildren: () => import('./features/product/product.module')
-      .then((x) => x.ProductModule) ,
+      .then((x) => x.ProductModule),
     canActivate: [authGuard]
   },
   { path: "statistics",

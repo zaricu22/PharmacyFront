@@ -10,6 +10,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./auth/interceptors/token.interceptor";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {TokenInterceptor} from "./auth/interceptors/token.interceptor";
     SidenavComponent
   ],
   imports: [
+    CommonModule,
     RouterModule,
     RouterLink,
 
