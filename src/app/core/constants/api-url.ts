@@ -21,4 +21,5 @@ export class AuthenticationURL {
   static readonly AUTHENTICATE = "/authenticate";
   static readonly LOGIN = "/login";
   static readonly LOGOUT = "/logout";
+  static readonly REFRESH_TOKEN = "/refresh-token";
 }

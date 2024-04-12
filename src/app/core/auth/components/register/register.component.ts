@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {RegisterRequest} from "../../models/register-request";
 import {AuthenticationResponse} from "../../models/authentication-response";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -15,6 +15,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
 import {MatSnackBar, MatSnackBarConfig, MatSnackBarModule} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Subscription} from "rxjs";
 
 @Component({
   standalone: true,
@@ -36,10 +37,12 @@ import {HttpErrorResponse} from "@angular/common/http";
     MatSnackBarModule
   ]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   registerRequest: RegisterRequest = {} as RegisterRequest;
   authResponse: AuthenticationResponse = {} as AuthenticationResponse;
   message = '';
+
+  subscription$: Subscription = new Subscription();
 
   constructor(
     private authService: AuthenticationService,
@@ -47,13 +50,18 @@ export class RegisterComponent {
     private _snackBar: MatSnackBar
   ) {}
 
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
+
   openSnackBar(message: string, action: string, config?: MatSnackBarConfig) {
     this._snackBar.open(message, action, config);
   }
 
   register() {
     this.message = '';
-    this.authService.register(this.registerRequest)
+    this.subscription$.add(
+      this.authService.register(this.registerRequest)
       .subscribe({
         next: (response) => {
           this.authResponse = response;
@@ -67,7 +75,7 @@ export class RegisterComponent {
         error: (err: HttpErrorResponse) => {
           this.openSnackBar(err.error.message, "CANCEL", {"duration": 3000})
         }
-      });
-
+      })
+    );
   }
 }

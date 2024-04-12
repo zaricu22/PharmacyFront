@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AuthenticationRequest} from "../../models/authentication-request";
 import {AuthenticationResponse} from "../../models/authentication-response";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -13,6 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatListModule} from "@angular/material/list";
+import {Subscription} from "rxjs";
 
 @Component({
   standalone: true,
@@ -33,23 +34,33 @@ import {MatListModule} from "@angular/material/list";
     MatListModule
   ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   authRequest: AuthenticationRequest = {} as AuthenticationRequest;
   authResponse: AuthenticationResponse = {} as AuthenticationResponse;
+
+  subscription$: Subscription = new Subscription();
 
   constructor(
     private authService: AuthenticationService,
     private router: Router
   ) {}
 
+  ngOnDestroy() {
+    this.subscription$.unsubscribe();
+  }
+
   authenticate() {
-    this.authService.login(this.authRequest)
+    this.subscription$.add(
+      this.authService.login(this.authRequest)
       .subscribe({
         next: (response) => {
           this.authResponse = response;
-          localStorage.setItem('token', response.token as string);
+          localStorage.setItem('access-token', response.accessToken as string);
+          localStorage.setItem('refresh-token', response.refreshToken as string);
+          this.authService.emitLogInOutEvent();
           this.router.navigate(['product']);
         }
-      });
+      })
+    );
   }
 }
