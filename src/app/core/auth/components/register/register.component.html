@@ -11,7 +11,7 @@
         <mat-list-item role="listitem" style="height: 100px;">
           <mat-form-field appearance="outline">
             <mat-label>Enter username</mat-label>
-            <input matInput type="text" name="name" [(ngModel)]="registerRequest.username" required>
+            <input matInput type="text" name="username" [(ngModel)]="registerRequest.username" required>
             <mat-icon matSuffix>account_circle</mat-icon>
           </mat-form-field>
         </mat-list-item>
@@ -20,6 +20,27 @@
             <mat-label>Enter password</mat-label>
             <input matInput type="text" name="password" [(ngModel)]="registerRequest.password" minlength="6" required>
             <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item role="listitem" style="height: 100px;">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter email</mat-label>
+            <input matInput type="text" name="email" [(ngModel)]="registerRequest.email" required>
+            <mat-icon matSuffix>alternate_email</mat-icon>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item role="listitem" style="height: 100px;">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter first name</mat-label>
+            <input matInput type="text" name="first_name" [(ngModel)]="registerRequest.firstname" required>
+            <mat-icon matSuffix>person_outline</mat-icon>
+          </mat-form-field>
+        </mat-list-item>
+        <mat-list-item role="listitem" style="height: 100px;">
+          <mat-form-field appearance="outline">
+            <mat-label>Enter last name</mat-label>
+            <input matInput type="text" name="last_name" [(ngModel)]="registerRequest.lastname" required>
+            <mat-icon matSuffix>person_outline</mat-icon>
           </mat-form-field>
         </mat-list-item>
       </mat-list>
