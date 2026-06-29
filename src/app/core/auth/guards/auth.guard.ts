@@ -15,7 +15,7 @@ export const nonAuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   let isLogged: boolean = localStorage.getItem('access-token') != null;
   if (isLogged) {
-    router.navigate([route.url]);
+    router.navigate(['product']);
     return false;
   }
   return true;
