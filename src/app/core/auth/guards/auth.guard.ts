@@ -15,6 +15,8 @@ export const nonAuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   let isLogged: boolean = localStorage.getItem('access-token') != null;
   if (isLogged) {
+    // redirect to home page — using route.url (UrlSegment[]) here caused a crash
+    // because router.navigate() cannot serialize UrlSegment objects
     router.navigate(['product']);
     return false;
   }
